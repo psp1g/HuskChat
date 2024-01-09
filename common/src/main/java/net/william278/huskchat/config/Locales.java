@@ -25,6 +25,7 @@ import dev.dejvokep.boostedyaml.YamlDocument;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.TextColor;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.william278.huskchat.HuskChat;
 import net.william278.huskchat.channel.Channel;
 import net.william278.huskchat.player.Player;
@@ -86,7 +87,12 @@ public class Locales {
     public void sendChannelMessage(@NotNull Player target, @NotNull Player sender, @NotNull Channel channel,
                                    @NotNull String message) {
         plugin.replacePlaceholders(sender, channel.getFormat()).thenAccept(replaced -> {
-            final Component format = new MineDown(replaced).toComponent();
+            //final Component format = new MineDown(replaced).toComponent();
+            final TextComponent format = LegacyComponentSerializer
+                    .builder()
+                    .hexColors()
+                    .build()
+                    .deserialize(replaced);
             final TextComponent.Builder builder = Component.text().append(format);
             if (sender.hasPermission("huskchat.formatted_chat")) {
                 builder.append(new MineDown(message)
@@ -112,7 +118,12 @@ public class Locales {
             }
 
             final TextComponent.Builder builder = Component.text();
-            final Component format = new MineDown(replaced).toComponent();
+            //final Component format = new MineDown(replaced).toComponent();
+            final TextComponent format = LegacyComponentSerializer
+                    .builder()
+                    .hexColors()
+                    .build()
+                    .deserialize(replaced);
             builder.append(format);
             if (sender.hasPermission("huskchat.formatted_chat")) {
                 builder.append(new MineDown(message).disable(MineDownParser.Option.ADVANCED_FORMATTING)
@@ -155,7 +166,12 @@ public class Locales {
             }
 
             final TextComponent.Builder builder = Component.text();
-            final Component format = new MineDown(replaced).toComponent();
+            //final Component format = new MineDown(replaced).toComponent();
+            final TextComponent format = LegacyComponentSerializer
+                    .builder()
+                    .hexColors()
+                    .build()
+                    .deserialize(replaced);
             builder.append(format);
             if (sender.hasPermission("huskchat.formatted_chat")) {
                 builder.append(new MineDown(message).disable(MineDownParser.Option.ADVANCED_FORMATTING)
